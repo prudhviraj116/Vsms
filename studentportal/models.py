@@ -201,8 +201,8 @@ class Placement(models.Model):
 
 
 
-    @receiver(post_save, sender=Student_tabel)
-    def send_student_creation_email(sender, instance, created, **kwargs):
+@receiver(post_save, sender=Student_tabel)
+def send_student_creation_email(sender, instance, created, **kwargs):
         if created:
             
             subject = 'Welcome to Vcube, {}!'.format(instance.userrole.username)
@@ -224,8 +224,8 @@ The Vcube Team
         send_mail(subject, message, from_email, [to_email], fail_silently=False)
 
 
-    @receiver(post_save, sender=Task)
-    def send_task_email(sender, instance, created, **kwargs):
+@receiver(post_save, sender=Task)
+def send_task_email(sender, instance, created, **kwargs):
         if created:  # Ensure this runs only when a new task is created
             students = Student_tabel.objects.filter(batch=instance.batch)
             recipient_emails = [student.userrole.email for student in students]
